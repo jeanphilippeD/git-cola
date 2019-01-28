@@ -1936,7 +1936,8 @@ class GraphView(QtWidgets.QGraphicsView, ViewerMixin):
         self.reset_columns()
         self.reset_rows()
 
-        for node in sort_by_generation(list(self.commits)):
+        row_index = 1
+        for node in list(self.commits):#sort_by_generation(list(self.commits)):
             if node.column is None:
                 # Node is either root or its parent is not in items. The last
                 # happens when tree loading is in progress. Allocate new
@@ -1944,6 +1945,8 @@ class GraphView(QtWidgets.QGraphicsView, ViewerMixin):
                 node.column = self.alloc_column()
 
             node.row = self.alloc_cell(node.column, node.tags)
+            node.row = row_index
+            row_index += 1
 
             # Allocate columns for children which are still without one. Also
             # propagate frontier for children.
